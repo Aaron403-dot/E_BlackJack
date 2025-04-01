@@ -124,7 +124,6 @@ public class App {
         for (int i = 0; i < CartasAEntregar.length; i++) {
             CartasAEntregar[i] = Cartas[LimiteCartas-i];
         }
-
         return CartasAEntregar;
         }
         catch(Exception e)
@@ -134,7 +133,21 @@ public class App {
         }
     }
 
+
+    /*Muestra la mano */
+
+    private void MostrarMano(String[] Mano)
+    {
+        System.out.println("Estas son las cartas: ");
+        for (int i = 0; i < Mano.length; i++) {
+            if (Mano[i]!=null) {
+               System.out.print(" [" + Mano[i] + "] ");
+            }
+        }
+    }
+
     /* Instancia del turno del jugador se realizaran todas las funciones del jugador */
+    
     private int[] JugadorTurno(int LimiteCartas,String[] Cartas, String[] TuMano,boolean TurnoJ,Scanner sc)
     {
         try {
@@ -142,48 +155,46 @@ public class App {
             int puntuacion = 0;
             int[] PuntuacionYCartasPedidads = {0,LimiteCartas};
             while (TurnoJ) {
-                System.out.println("Es su turno tiene es mano: ");
-            for (int i = 0; i < TuMano.length; i++) {
-                if (TuMano[i]!=null) {
-                    System.out.print(" [" + TuMano[i] + "] ");
-                }
-            }
-            puntuacion = converte(TuMano);
-            System.out.println("");
-            System.out.println("Tu puntuacion es: " + puntuacion);
-            System.out.println("Que desea hacer");
-            System.out.println("[H]it o [F]old");
-            switch (sc.nextLine().toUpperCase()) {
-                case "H" :
-                        TuMano[CartasEnMano] = Hit(Cartas, LimiteCartas);
-                        LimiteCartas--;
-                        CartasEnMano++;
-                        PuntuacionYCartasPedidads[1] = LimiteCartas;
-                        if (converte(TuMano)>21) {
-                            System.out.println("Oops mas de 21");
-                            TurnoJ=false;
-                            PuntuacionYCartasPedidads[0] = -1;
-                            return PuntuacionYCartasPedidads;
-                        }
-                        else{
-                            if (converte(TuMano)==21) {
-                                System.out.println("Tienes 21");
+                System.out.println("Es su turno");
+                MostrarMano(TuMano);
+                puntuacion = converte(TuMano);
+                System.out.println("");
+                System.out.println("Tu puntuacion es: " + puntuacion);
+                System.out.println("Que desea hacer");
+                System.out.println("[H]it o [F]old");
+                switch (sc.nextLine().toUpperCase()) {
+                    case "H" :
+                            TuMano[CartasEnMano] = Hit(Cartas, LimiteCartas);
+                            LimiteCartas--;
+                            CartasEnMano++;
+                            PuntuacionYCartasPedidads[1] = LimiteCartas;
+                            if (converte(TuMano)>21) {
+                                MostrarMano(TuMano);
+                                System.out.println("Oops mas de 21");
                                 TurnoJ=false;
-                                PuntuacionYCartasPedidads[0] = 21;
+                                PuntuacionYCartasPedidads[0] = -1;
                                 return PuntuacionYCartasPedidads;
                             }
-                        }
-                    break;
+                            else{
+                                if (converte(TuMano)==21) {
+                                    MostrarMano(TuMano);
+                                    System.out.println("Tienes 21");
+                                    TurnoJ=false;
+                                    PuntuacionYCartasPedidads[0] = 21;
+                                    return PuntuacionYCartasPedidads;
+                                }
+                            }
+                        break;
 
-                case "F" :
-                    TurnoJ = false;
-                    System.out.println("Tu puntuacion final es de: " + puntuacion);
-                    PuntuacionYCartasPedidads[0] = puntuacion;
-                break;
-                default:
-                    System.err.println("Escriba una opcion valida");
+                    case "F" :
+                        TurnoJ = false;
+                        System.out.println("Tu puntuacion final es de: " + puntuacion);
+                        PuntuacionYCartasPedidads[0] = puntuacion;
                     break;
-            }
+                    default:
+                        System.err.println("Escriba una opcion valida");
+                        break;
+                }
             
         }
         return PuntuacionYCartasPedidads;
@@ -194,6 +205,8 @@ public class App {
         }
     }
     
+    /*Metodo de turno del crupier con la IA mas basica de la historia */
+
     private int[] CrupierTurno(int LimiteCartas,String[] Cartas, String[] crupier,boolean TurnoC)
     {
         try {
@@ -202,51 +215,50 @@ public class App {
             int[] PuntuacionYCartasPedidads = {0,LimiteCartas};
             int SimpleAI = 0;
             while (TurnoC) {
-                System.out.println("El crupier tiene en mano: ");
-            for (int i = 0; i < crupier.length; i++) {
-                if (crupier[i]!=null) {
-                    System.out.print(" [" + crupier[i] + "] ");
+                System.out.println("es el turno del crupier");
+                MostrarMano(crupier);
+                System.out.print("\n");
+                puntuacion = converte(crupier);
+                if (puntuacion<17) {
+                    SimpleAI = 1;
                 }
-            }
-            System.out.print("\n");
-            puntuacion = converte(crupier);
-            if (puntuacion<17) {
-                SimpleAI = 1;
-            }
-            else{
-                SimpleAI = 2;
-            }
-            
-            switch (SimpleAI) {
-                case 1 :
-                        crupier[CartasEnMano] = Hit(Cartas, LimiteCartas);
-                        LimiteCartas--;
-                        CartasEnMano++;
-                        PuntuacionYCartasPedidads[1] = LimiteCartas;
-                        if (converte(crupier)>21) {
-                            System.out.println("Oops mas de 21");
-                            TurnoC=false;
-                            PuntuacionYCartasPedidads[0] = -1;
-                            return PuntuacionYCartasPedidads;
-                        }
-                        else{
-                            if (converte(crupier)==21) {
+                else{
+                    SimpleAI = 2;
+                }
+                
+                switch (SimpleAI) {
+                    case 1 :
+                            crupier[CartasEnMano] = Hit(Cartas, LimiteCartas);
+                            LimiteCartas--;
+                            CartasEnMano++;
+                            PuntuacionYCartasPedidads[1] = LimiteCartas;
+                            if (converte(crupier)>21) {
+                                MostrarMano(crupier);
+                                System.out.println("Oops mas de 21");
                                 TurnoC=false;
-                                PuntuacionYCartasPedidads[0] = 21;
+                                PuntuacionYCartasPedidads[0] = -1;
                                 return PuntuacionYCartasPedidads;
                             }
-                        }
-                    break;
+                            else{
+                                if (converte(crupier)==21) {
+                                    MostrarMano(crupier);
+                                    TurnoC=false;
+                                    PuntuacionYCartasPedidads[0] = 21;
+                                    return PuntuacionYCartasPedidads;
+                                }
+                            }
+                        break;
 
-                case 2 :
-                    TurnoC = false;
-                    System.out.println("La puntuacion final del crupier es de: " + puntuacion);
-                    PuntuacionYCartasPedidads[0] = puntuacion;
-                break;
-                default:
+                    case 2 :
+                        MostrarMano(crupier);
+                        TurnoC = false;
+                        System.out.println("La puntuacion final del crupier es de: " + puntuacion);
+                        PuntuacionYCartasPedidads[0] = puntuacion;
                     break;
-            }
-            
+                    default:
+                        break;
+                }
+                
         }
         return PuntuacionYCartasPedidads;
     }
@@ -256,6 +268,7 @@ public class App {
         }
     }
 
+    /*Metodo de Hit para pedir cartas */
 
     private String Hit(String[] Cartas,int LimiteCartas){
         try{
@@ -268,6 +281,8 @@ public class App {
             return "";
         }
     }
+
+    /*Convierte el String de numero en el numero que debe ser ademas de que convierte las J Q y K en 10 ademas de asignar el valor al As */
 
     private int converte(String[] Mano){
     
@@ -320,6 +335,8 @@ public class App {
         }
         return Converted;
     }
+
+    /* chequeo de que es numero */
 
     private static boolean esNumero(String NumOLet)
     {
