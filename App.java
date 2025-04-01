@@ -147,7 +147,7 @@ public class App {
     }
 
     /* Instancia del turno del jugador se realizaran todas las funciones del jugador */
-    
+
     private int[] JugadorTurno(int LimiteCartas,String[] Cartas, String[] TuMano,boolean TurnoJ,Scanner sc)
     {
         try {
@@ -170,7 +170,7 @@ public class App {
                             PuntuacionYCartasPedidads[1] = LimiteCartas;
                             if (converte(TuMano)>21) {
                                 MostrarMano(TuMano);
-                                System.out.println("Oops mas de 21");
+                                System.out.println("\n Oops mas de 21 \n");
                                 TurnoJ=false;
                                 PuntuacionYCartasPedidads[0] = -1;
                                 return PuntuacionYCartasPedidads;
@@ -178,7 +178,7 @@ public class App {
                             else{
                                 if (converte(TuMano)==21) {
                                     MostrarMano(TuMano);
-                                    System.out.println("Tienes 21");
+                                    System.out.println("\n Tienes 21 \n ");
                                     TurnoJ=false;
                                     PuntuacionYCartasPedidads[0] = 21;
                                     return PuntuacionYCartasPedidads;
@@ -234,7 +234,7 @@ public class App {
                             PuntuacionYCartasPedidads[1] = LimiteCartas;
                             if (converte(crupier)>21) {
                                 MostrarMano(crupier);
-                                System.out.println("Oops mas de 21");
+                                System.out.println("\n Oops mas de 21 \n");
                                 TurnoC=false;
                                 PuntuacionYCartasPedidads[0] = -1;
                                 return PuntuacionYCartasPedidads;
