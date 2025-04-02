@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class App {
-    
+
     /*Declaracion de las variables iniciales dentro del main + la llamada al RUN del juego */
     public static void main(String[] args) throws Exception {
         String[] Cartas = new String[52];
@@ -332,7 +332,6 @@ public class App {
             ContenedorAMedida[Q] = Mano[Q];
         
         }
-
 
         for(int i = 0; i < ContenedorAMedida.length; i++) {
             SToInt = ContenedorAMedida[i].substring(0,ContenedorAMedida[i].length()-2);
