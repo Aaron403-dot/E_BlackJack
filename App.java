@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class App {
+    
     /*Declaracion de las variables iniciales dentro del main + la llamada al RUN del juego */
     public static void main(String[] args) throws Exception {
         String[] Cartas = new String[52];
@@ -69,6 +70,8 @@ public class App {
             int PuntuacionCrupier = 0;
             int[] ContenedorDeCartasYBaraja = new int[2];
             while (gameState) {
+                ManoReset(crupier);
+                ManoReset(TuMano);
                 for (int i = 0; i < entregaCartas(Cartas, limiteCartas).length; i++) {
                     crupier[i] =entregaCartas(Cartas, limiteCartas)[i];
                     limiteCartas--;
@@ -146,6 +149,19 @@ public class App {
         }
     }
 
+
+    /*Metodo de reseteo de la mano y las cartas */
+    private String[] ManoReset(String[] Mano)
+    {
+        if (Mano[2] != null) {
+            for (int i = 0; i < Mano.length; i++) {
+                Mano[i] = null;
+            }
+        }
+        return Mano;
+    }
+
+
     /* Instancia del turno del jugador se realizaran todas las funciones del jugador */
 
     private int[] JugadorTurno(int LimiteCartas,String[] Cartas, String[] TuMano,boolean TurnoJ,Scanner sc)
@@ -160,6 +176,14 @@ public class App {
                 puntuacion = converte(TuMano);
                 System.out.println("");
                 System.out.println("Tu puntuacion es: " + puntuacion);
+
+                if (Check21(TuMano)) {
+                    System.out.println("\n Tienes 21 \n ");
+                    TurnoJ=false;
+                    PuntuacionYCartasPedidads[0] = 21;
+                    return PuntuacionYCartasPedidads;
+                }
+
                 System.out.println("Que desea hacer");
                 System.out.println("[H]it o [F]old");
                 switch (sc.nextLine().toUpperCase()) {
@@ -174,15 +198,6 @@ public class App {
                                 TurnoJ=false;
                                 PuntuacionYCartasPedidads[0] = -1;
                                 return PuntuacionYCartasPedidads;
-                            }
-                            else{
-                                if (converte(TuMano)==21) {
-                                    MostrarMano(TuMano);
-                                    System.out.println("\n Tienes 21 \n ");
-                                    TurnoJ=false;
-                                    PuntuacionYCartasPedidads[0] = 21;
-                                    return PuntuacionYCartasPedidads;
-                                }
                             }
                         break;
 
@@ -205,6 +220,14 @@ public class App {
         }
     }
     
+    /*Comprobador de que la mano es = a 21 */
+
+    private boolean Check21(String[] Mano)
+    {
+        return(converte(Mano)==21);
+    }
+
+
     /*Metodo de turno del crupier con la IA mas basica de la historia */
 
     private int[] CrupierTurno(int LimiteCartas,String[] Cartas, String[] crupier,boolean TurnoC)
@@ -219,6 +242,14 @@ public class App {
                 MostrarMano(crupier);
                 System.out.print("\n");
                 puntuacion = converte(crupier);
+                
+                if (Check21(crupier)) {
+                    System.out.println("\n El crupier Tiene 21 \n ");
+                    TurnoC=false;
+                    PuntuacionYCartasPedidads[0] = 21;
+                    return PuntuacionYCartasPedidads;
+                }
+
                 if (puntuacion<17) {
                     SimpleAI = 1;
                 }
@@ -238,14 +269,6 @@ public class App {
                                 TurnoC=false;
                                 PuntuacionYCartasPedidads[0] = -1;
                                 return PuntuacionYCartasPedidads;
-                            }
-                            else{
-                                if (converte(crupier)==21) {
-                                    MostrarMano(crupier);
-                                    TurnoC=false;
-                                    PuntuacionYCartasPedidads[0] = 21;
-                                    return PuntuacionYCartasPedidads;
-                                }
                             }
                         break;
 
@@ -311,7 +334,7 @@ public class App {
         }
 
 
-        for (int i = 0; i < ContenedorAMedida.length; i++) {
+        for(int i = 0; i < ContenedorAMedida.length; i++) {
             SToInt = ContenedorAMedida[i].substring(0,ContenedorAMedida[i].length()-2);
             if (SToInt.equals("J")||SToInt.equals("Q")||SToInt.equals("K")) {
                 SToInt = 10+"";
@@ -320,7 +343,7 @@ public class App {
                 SToInt = 1+"";
             }
             else{
-                if (SToInt.equals("A") && Converted+11 < 21) {
+                if (SToInt.equals("A") && Converted+11 <= 21) {
                     SToInt = 11+"";
                 }
             }
