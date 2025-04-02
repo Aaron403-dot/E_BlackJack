@@ -8,6 +8,7 @@ public class App {
 
     /*Declaracion de las variables iniciales dentro del main + la llamada al RUN del juego */
     public static void main(String[] args) throws Exception {
+        
         String[] Cartas = new String[52];
         Scanner sc = new Scanner(System.in);
         App src = new App();
@@ -66,9 +67,9 @@ public class App {
             boolean TurnoJ = true;
             boolean TurnoC = true;
             int limiteCartas = 51;
-            int PuntuacionJugador = 0;
-            int PuntuacionCrupier = 0;
-            int[] ContenedorDeCartasYBaraja = new int[2];
+            int PuntuacionJugador;
+            int PuntuacionCrupier;
+            int[] ContenedorDeCartasYBaraja/*  = new int[2]*/;
             while (gameState) {
                 ManoReset(crupier);
                 ManoReset(TuMano);
@@ -168,7 +169,7 @@ public class App {
     {
         try {
             int CartasEnMano = 2;
-            int puntuacion = 0;
+            int puntuacion;
             int[] PuntuacionYCartasPedidads = {0,LimiteCartas};
             while (TurnoJ) {
                 System.out.println("Es su turno");
@@ -179,7 +180,6 @@ public class App {
 
                 if (Check21(TuMano)) {
                     System.out.println("\n Tienes 21 \n ");
-                    TurnoJ=false;
                     PuntuacionYCartasPedidads[0] = 21;
                     return PuntuacionYCartasPedidads;
                 }
@@ -187,28 +187,25 @@ public class App {
                 System.out.println("Que desea hacer");
                 System.out.println("[H]it o [F]old");
                 switch (sc.nextLine().toUpperCase()) {
-                    case "H" :
-                            TuMano[CartasEnMano] = Hit(Cartas, LimiteCartas);
-                            LimiteCartas--;
-                            CartasEnMano++;
-                            PuntuacionYCartasPedidads[1] = LimiteCartas;
-                            if (converte(TuMano)>21) {
-                                MostrarMano(TuMano);
-                                System.out.println("\n Oops mas de 21 \n");
-                                TurnoJ=false;
-                                PuntuacionYCartasPedidads[0] = -1;
-                                return PuntuacionYCartasPedidads;
-                            }
-                        break;
+                    case "H" -> {
+                        TuMano[CartasEnMano] = Hit(Cartas, LimiteCartas);
+                        LimiteCartas--;
+                        CartasEnMano++;
+                        PuntuacionYCartasPedidads[1] = LimiteCartas;
+                        if (converte(TuMano)>21) {
+                            MostrarMano(TuMano);
+                            System.out.println("\n Oops mas de 21 \n");
+                            PuntuacionYCartasPedidads[0] = -1;
+                            return PuntuacionYCartasPedidads;
+                        }
+                    }
 
-                    case "F" :
+                    case "F" -> {
                         TurnoJ = false;
                         System.out.println("Tu puntuacion final es de: " + puntuacion);
                         PuntuacionYCartasPedidads[0] = puntuacion;
-                    break;
-                    default:
-                        System.err.println("Escriba una opcion valida");
-                        break;
+                    }
+                    default -> System.err.println("Escriba una opcion valida");
                 }
             
         }
@@ -234,9 +231,9 @@ public class App {
     {
         try {
             int CartasEnMano = 2;
-            int puntuacion = 0;
+            int puntuacion;
             int[] PuntuacionYCartasPedidads = {0,LimiteCartas};
-            int SimpleAI = 0;
+            int SimpleAI;
             while (TurnoC) {
                 System.out.println("es el turno del crupier");
                 MostrarMano(crupier);
@@ -245,7 +242,6 @@ public class App {
                 
                 if (Check21(crupier)) {
                     System.out.println("\n El crupier Tiene 21 \n ");
-                    TurnoC=false;
                     PuntuacionYCartasPedidads[0] = 21;
                     return PuntuacionYCartasPedidads;
                 }
@@ -258,28 +254,27 @@ public class App {
                 }
                 
                 switch (SimpleAI) {
-                    case 1 :
-                            crupier[CartasEnMano] = Hit(Cartas, LimiteCartas);
-                            LimiteCartas--;
-                            CartasEnMano++;
-                            PuntuacionYCartasPedidads[1] = LimiteCartas;
-                            if (converte(crupier)>21) {
-                                MostrarMano(crupier);
-                                System.out.println("\n Oops mas de 21 \n");
-                                TurnoC=false;
-                                PuntuacionYCartasPedidads[0] = -1;
-                                return PuntuacionYCartasPedidads;
-                            }
-                        break;
+                    case 1 -> {
+                        crupier[CartasEnMano] = Hit(Cartas, LimiteCartas);
+                        LimiteCartas--;
+                        CartasEnMano++;
+                        PuntuacionYCartasPedidads[1] = LimiteCartas;
+                        if (converte(crupier)>21) {
+                            MostrarMano(crupier);
+                            System.out.println("\n Oops mas de 21 \n");
+                            PuntuacionYCartasPedidads[0] = -1;
+                            return PuntuacionYCartasPedidads;
+                        }
+                    }
 
-                    case 2 :
+                    case 2 -> {
                         MostrarMano(crupier);
                         TurnoC = false;
                         System.out.println("La puntuacion final del crupier es de: " + puntuacion);
                         PuntuacionYCartasPedidads[0] = puntuacion;
-                    break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
                 
         }
@@ -311,11 +306,11 @@ public class App {
     
         int Converted=0;
 
-        String SToInt = "";
+        String SToInt;
         
         int counter = 0;
         
-        String[] ContenedorAMedida = new String[1];
+        String[] ContenedorAMedida;
         
         for(int i = 0; i < Mano.length; i++) {
         
