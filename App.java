@@ -50,7 +50,7 @@ public class App {
         String Temp;
         int azar;
         for (int i = 51; i > 1; i--) {
-            azar = r.nextInt(1, i);
+            azar = r.nextInt(1 + i);
             Temp = Cartas[azar];
             Cartas[azar] = Cartas[i];
             Cartas[i] = Temp;
