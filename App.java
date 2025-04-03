@@ -14,15 +14,15 @@ public class App {
         App src = new App();
         String[] TuMano = new String[12];
         String[] Crupier = new String[12];
-        Cartas = src.GeneraraMazo(Cartas);
-        Cartas = src.MezclarMazo(Cartas);
+        Cartas = src.generaraMazo(Cartas);
+        Cartas = src.mezclarMazo(Cartas);
         src.Jugar(Cartas, Crupier, TuMano, sc);
 
         sc.close();
     }
 
     /* Este metodo se ocupara de crear el mazo los palos se representaran como -* (El asterisko reprecentando la primera letra de la carta)*/
-    private String[] GeneraraMazo(String[] Cartas){
+    private String[] generaraMazo(String[] Cartas){
         String[] Corazon = {"A-C", "2-C", "3-C", "4-C", "5-C", "6-C", "7-C", "8-C", "9-C", "10-C", "J-C", "Q-C", "K-C"};
         String[] Pica = {"A-P", "2-P", "3-P", "4-P", "5-P", "6-P", "7-P", "8-P", "9-P", "10-P", "J-P", "Q-P", "K-P"};
         String[] Trebol = {"A-T", "2-T", "3-T", "4-T", "5-T", "6-T", "7-T", "8-T", "9-T", "10-T", "J-T", "Q-T", "K-T"};
@@ -44,7 +44,7 @@ public class App {
         return Cartas;
     }
     /*Se ocupa de mesclar el mazo con el algoritmo Fisher-Yates */
-    private String[] MezclarMazo(String[] Cartas)
+    private String[] mezclarMazo(String[] Cartas)
     {
         Random r = new Random();
         String Temp;
